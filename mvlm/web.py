@@ -3,7 +3,6 @@ from __future__ import annotations
 import json
 import threading
 import webbrowser
-from functools import partial
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 
 from mvlm.results import get_all_projects, get_project_data
@@ -179,17 +178,18 @@ if (projects.length) renderProject(projects[projects.length - 1]);
 </html>"""
 
 
-class _Handler(SimpleHTTPRequestHandler):
-    html_content = ""
+def _make_handler(html: str):
+    class Handler(SimpleHTTPRequestHandler):
+        def do_GET(self):
+            self.send_response(200)
+            self.send_header("Content-Type", "text/html; charset=utf-8")
+            self.end_headers()
+            self.wfile.write(html.encode())
 
-    def do_GET(self):
-        self.send_response(200)
-        self.send_header("Content-Type", "text/html; charset=utf-8")
-        self.end_headers()
-        self.wfile.write(self.html_content.encode())
+        def log_message(self, format, *args):
+            pass
 
-    def log_message(self, format, *args):
-        pass
+    return Handler
 
 
 def show(port: int = 8765) -> None:
@@ -198,11 +198,9 @@ def show(port: int = 8765) -> None:
     for p in projects:
         data[p] = get_project_data(p)
 
-    html = HTML_TEMPLATE.replace("__DATA_PLACEHOLDER__", json.dumps(data, default=str))
+    page = HTML_TEMPLATE.replace("__DATA_PLACEHOLDER__", json.dumps(data, default=str))
 
-    handler = partial(_Handler)
-    handler.html_content = html
-    server = HTTPServer(("127.0.0.1", port), handler)
+    server = HTTPServer(("127.0.0.1", port), _make_handler(page))
 
     url = f"http://127.0.0.1:{port}"
     print(f"mvlm dashboard: {url}")

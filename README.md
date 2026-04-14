@@ -1,6 +1,14 @@
-# mvlm
+<p align="center">
+<picture>
+  <img width="75%" alt="mvlm logo" src="assets/logo.svg">
+</picture>
 
-Find the minimum viable language model for your task. Drop-in replacements for OpenAI/Anthropic clients that silently replay requests to smaller LLMs and compare structured outputs.
+<strong>Quickly find the minimum viable language model for your task, for faster and cheaper intelligence</strong>
+  
+</p>
+
+
+<div align="center">
 
 ## Install
 
