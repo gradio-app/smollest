@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="75%" alt="mvlm logo" src="assets/logo.svg?v=2" /><br>
+  <img width="75%" alt="mvlm logo" src="assets/logo2.svg" /><br>
  <b>Quickly find the minimum viable language model for your task, for faster and cheaper intelligence</b>
 </p>
 
