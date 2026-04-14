@@ -3,7 +3,7 @@
  <b>Quickly find the <i>smollest</i> viable language model for your task, for faster and cheaper intelligence</b>
 </p>
 
-The basic idea is to run your OpenAI/Anthropic API queries to other, smaller models on Hugging Face API (or local), allowing you to quickly find the smallest/cheapest/fastest model that would work for your use case.
+The basic idea is to run your OpenAI/Anthropic API queries to other, smaller models on Hugging Face API (or local), allowing you to quickly find the smollest/cheapest/fastest model that would work for your use case.
 
 <p align="center">
   <img alt="smollest dashboard screenshot" src="https://raw.githubusercontent.com/abidlabs/mvlm/main/assets/screenshot.png" />
