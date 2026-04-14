@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "mvlm"
+name = "smollest"
 description = "Minimum Viable Language Model — find the smallest LLM that works for your task"
 authors = [
     { name = "Your Name", email = "your.email@example.com" },
@@ -24,8 +24,8 @@ dynamic = ["version"]
 mvlm = "mvlm.cli:main"
 
 [project.urls]
-homepage = "https://github.com/your-org/mvlm"
-repository = "https://github.com/your-org/mvlm"
+homepage = "https://github.com/abidlabs/mvlm"
+repository = "https://github.com/abidlabs/mvlm"
 
 [project.optional-dependencies]
 openai = ["openai>=1.0.0"]

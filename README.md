@@ -13,14 +13,14 @@ The basic idea is to run your OpenAI/Anthropic API queries to other, smaller mod
 ## Install
 
 ```bash
-pip install mvlm[openai]       # for OpenAI
-pip install mvlm[anthropic]    # for Anthropic
-pip install mvlm[all]          # both
+pip install smollest[openai]       # for OpenAI
+pip install smollest[anthropic]    # for Anthropic
+pip install smollest[all]          # both
 ```
 
 ## Usage
 
-Install `openai` from `mvlm` and then write your code as normal!
+Install `openai` from `smollest` and then write your code as normal!
 
 ```python
 from mvlm import openai
