@@ -1,12 +1,12 @@
 <p align="center">
-  <img width="75%" alt="smollest logo" src="assets/logo2.svg" /><br>
+  <img width="75%" alt="smollest logo" src="https://raw.githubusercontent.com/abidlabs/mvlm/main/assets/logo2.svg" /><br>
  <b>Quickly find the <u>s</u>mollest <u>m</u>inimum <u>v</u>iable <u>l</u>anguage <u>m</u>odel for your task, for faster and cheaper intelligence</b>
 </p>
 
 The basic idea is to run your OpenAI/Anthropic API queries to other, smaller models on Hugging Face API (or local), allowing you to quickly find the smallest/cheapest/fastest model that would work for your use case.
 
 <p align="center">
-  <img alt="smollest dashboard screenshot" src="assets/screenshot.png" />
+  <img alt="smollest dashboard screenshot" src="https://raw.githubusercontent.com/abidlabs/mvlm/main/assets/screenshot.png" />
 </p>
 
 
