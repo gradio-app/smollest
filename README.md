@@ -1,6 +1,6 @@
 <p align="center">
   <img width="75%" alt="mvlm logo" src="assets/logo2.svg" /><br>
- <b>Quickly find the M̲inimum V̲iable L̲anguage M̲odel for your task, for faster and cheaper intelligence</b>
+ <b>Quickly find the <u>m</u>inimum <u>v</u>iable <u>l</u>anguage <u>m</u>odel (mlmv) for your task, for faster and cheaper intelligence</b>
 </p>
 
 The basic idea is to run your OpenAI/Anthropic API queries to other, smaller models on Hugging Face API (or local), allowing you to quickly find the smallest/cheapest/fastest model that would work for your use case.
