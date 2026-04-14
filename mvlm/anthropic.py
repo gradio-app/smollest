@@ -117,7 +117,7 @@ class Anthropic:
             import anthropic as _anthropic
         except ImportError:
             raise ImportError(
-                "anthropic package is required. Install it with: pip install mvlm[anthropic]"
+                "anthropic package is required. Install it with: pip install smollest[anthropic]"
             )
 
         self._client = _anthropic.Anthropic(**kwargs)

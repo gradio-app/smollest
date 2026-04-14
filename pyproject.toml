@@ -21,6 +21,7 @@ classifiers = [
 dynamic = ["version"]
 
 [project.scripts]
+smollest = "mvlm.cli:main"
 mvlm = "mvlm.cli:main"
 
 [project.urls]

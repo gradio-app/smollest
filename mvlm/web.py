@@ -12,7 +12,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>mvlm — Minimum Viable Language Model</title>
+<title>smollest — Minimum Viable Language Model</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   svg.filters { position: absolute; width: 0; height: 0; }
@@ -157,7 +157,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 <body>
 
 <div class="sidebar">
-  <h1>mvlm</h1>
+  <h1>smollest</h1>
   <h2>Projects</h2>
   <div id="project-list"></div>
 </div>
@@ -461,7 +461,7 @@ def show(port: int = 8765) -> None:
     server = HTTPServer(("127.0.0.1", port), _make_handler(page))
 
     url = f"http://127.0.0.1:{port}"
-    print(f"mvlm dashboard: {url}")
+    print(f"smollest dashboard: {url}")
     print("Press Ctrl+C to stop")
 
     threading.Timer(0.5, lambda: webbrowser.open(url)).start()

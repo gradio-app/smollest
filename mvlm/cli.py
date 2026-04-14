@@ -21,7 +21,7 @@ def main():
         project = args[1] if len(args) > 1 else None
         report(project=project)
     else:
-        print("Usage: mvlm [show|report] [project]")
+        print("Usage: smollest [show|report] [project]")
         sys.exit(1)
 
 

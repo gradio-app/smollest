@@ -71,7 +71,7 @@ def print_comparison(
     candidate_latencies: dict[str, float],
 ) -> None:
     print(f"\n{'=' * 60}")
-    print(f"mvlm comparison — baseline: {baseline_model} ({baseline_latency_ms:.0f}ms)")
+    print(f"smollest comparison — baseline: {baseline_model} ({baseline_latency_ms:.0f}ms)")
     print(f"{'=' * 60}")
 
     for comp in comparisons:
@@ -136,7 +136,7 @@ def report(project: str | None = None) -> None:
                 candidates.setdefault(name, []).append(score)
 
         print(f"\n{'=' * 60}")
-        print(f"mvlm summary — project: {proj} ({len(entries)} comparisons)")
+        print(f"smollest summary — project: {proj} ({len(entries)} comparisons)")
         print(f"{'=' * 60}")
 
         for name, scores in sorted(candidates.items()):

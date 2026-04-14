@@ -97,7 +97,7 @@ class OpenAI:
             import openai as _openai
         except ImportError:
             raise ImportError(
-                "openai package is required. Install it with: pip install mvlm[openai]"
+                "openai package is required. Install it with: pip install smollest[openai]"
             )
 
         self._client = _openai.OpenAI(**kwargs)
