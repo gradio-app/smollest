@@ -31,15 +31,15 @@ ruff check --fix --select I && ruff format
 
 ## Architecture Overview
 
-mvlm (Minimum Viable Language Model) provides drop-in wrappers for OpenAI and Anthropic clients that silently replay requests to smaller candidate LLMs and compare structured outputs.
+smollest (Minimum Viable Language Model) provides drop-in wrappers for OpenAI and Anthropic clients that silently replay requests to smaller candidate LLMs and compare structured outputs.
 
 ### Key Modules
 
-- `mvlm/openai.py` — Drop-in `OpenAI` wrapper, intercepts `chat.completions.create()`
-- `mvlm/anthropic.py` — Drop-in `Anthropic` wrapper, intercepts `messages.create()`
-- `mvlm/candidates.py` — Runs candidate models (HuggingFace serverless + OpenAI-compatible local servers)
-- `mvlm/compare.py` — JSON field-by-field exact match comparison
-- `mvlm/results.py` — Logging to JSON file + console output
+- `smollest/openai.py` — Drop-in `OpenAI` wrapper, intercepts `chat.completions.create()`
+- `smollest/anthropic.py` — Drop-in `Anthropic` wrapper, intercepts `messages.create()`
+- `smollest/candidates.py` — Runs candidate models (HuggingFace serverless + OpenAI-compatible local servers)
+- `smollest/compare.py` — JSON field-by-field exact match comparison
+- `smollest/results.py` — Logging to JSON file + console output
 
 ### Testing Strategy
 
@@ -47,7 +47,7 @@ Tests are located in the `tests/` directory. Always run tests before committing 
 
 ### Important Files for Common Tasks
 
-- **Adding new features**: Modify relevant modules in `mvlm/`
+- **Adding new features**: Modify relevant modules in `smollest/`
 - **Adding dependencies**: Update `pyproject.toml` under `[project.dependencies]` or `[project.optional-dependencies]`
 
 ## Issue Resolution Workflow

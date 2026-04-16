@@ -24,8 +24,8 @@ dynamic = ["version"]
 smollest = "smollest.cli:main"
 
 [project.urls]
-homepage = "https://github.com/abidlabs/mvlm"
-repository = "https://github.com/abidlabs/mvlm"
+homepage = "https://github.com/abidlabs/smollest"
+repository = "https://github.com/abidlabs/smollest"
 
 [project.optional-dependencies]
 openai = ["openai>=1.0.0"]
