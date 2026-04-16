@@ -39,17 +39,7 @@ def test_openai_wrapper_calls_candidates(mock_openai_cls):
 
     from smollest.openai import OpenAI
 
-    with patch("smollest.openai.run_candidates") as mock_run:
-        from smollest.candidates import CandidateResult
-
-        mock_run.return_value = [
-            CandidateResult(
-                candidate="test-model",
-                content='{"sentiment": "positive"}',
-                latency_ms=100,
-            )
-        ]
-
+    with patch("smollest.openai.run_autocompare") as mock_autocompare:
         client = OpenAI(
             candidates=["test-model"],
             project="test-project",
@@ -61,7 +51,7 @@ def test_openai_wrapper_calls_candidates(mock_openai_cls):
         )
 
         assert result is baseline_response
-        mock_run.assert_called_once()
+        mock_autocompare.assert_called_once()
 
 
 @patch("openai.OpenAI")
@@ -86,15 +76,7 @@ def test_openai_wrapper_per_call_candidates(mock_openai_cls):
 
     from smollest.openai import OpenAI
 
-    with patch("smollest.openai.run_candidates") as mock_run:
-        from smollest.candidates import CandidateResult
-
-        mock_run.return_value = [
-            CandidateResult(
-                candidate="override-model", content='{"a": "b"}', latency_ms=50
-            )
-        ]
-
+    with patch("smollest.openai.run_autocompare") as mock_autocompare:
         client = OpenAI(candidates=["default-model"], api_key="test")
         client.chat.completions.create(
             model="gpt-4o",
@@ -102,7 +84,7 @@ def test_openai_wrapper_per_call_candidates(mock_openai_cls):
             candidates=["override-model"],
         )
 
-        call_args = mock_run.call_args
+        call_args = mock_autocompare.call_args
         assert call_args.kwargs["candidates"] == ["override-model"]
 
 

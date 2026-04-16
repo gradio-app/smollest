@@ -13,8 +13,21 @@ def _read_version() -> str:
 
 __version__ = _read_version()
 
-from smollest import anthropic, openai
-from smollest.results import report
-from smollest.web import show
+from smollest import anthropic, openai  # noqa: E402
+from smollest.defaults import get_default_candidates  # noqa: E402
+from smollest.metrics import (  # noqa: E402
+    clear_secondary_metrics,
+    register_secondary_metric,
+)
+from smollest.results import report  # noqa: E402
+from smollest.web import show  # noqa: E402
 
-__all__ = ["openai", "anthropic", "report", "show"]
+__all__ = [
+    "openai",
+    "anthropic",
+    "report",
+    "show",
+    "register_secondary_metric",
+    "clear_secondary_metrics",
+    "get_default_candidates",
+]

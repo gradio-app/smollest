@@ -8,7 +8,6 @@ No API keys needed.
 import json
 import random
 from datetime import datetime, timedelta, timezone
-from pathlib import Path
 
 from smollest.results import DATA_DIR
 from smollest.web import show

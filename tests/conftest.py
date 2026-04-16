@@ -3,7 +3,6 @@ from __future__ import annotations
 import sys
 import types
 
-
 if "openai" not in sys.modules:
     openai_stub = types.ModuleType("openai")
 

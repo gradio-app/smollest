@@ -17,38 +17,57 @@ def _get_project_file(project: str) -> Path:
 
 def log_result(
     project: str,
+    provider: str,
     baseline_model: str,
+    baseline_model_size: str,
+    baseline_messages: list[dict],
     baseline_content: str,
     baseline_latency_ms: float,
     baseline_input_tokens: int,
     baseline_output_tokens: int,
     baseline_cost: float | None,
+    baseline_secondary_metrics: dict[str, float | int | str | bool | None],
     comparison: ComparisonResult,
+    candidate_content: str | None,
+    candidate_model_size: str,
     candidate_latency_ms: float,
     candidate_input_tokens: int,
     candidate_output_tokens: int,
     candidate_cost: float | None,
+    candidate_secondary_metrics: dict[str, float | int | str | bool | None],
+    trace_id: str,
+    parent_span_id: str,
+    input_payload: dict,
 ) -> None:
     entry = {
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "project": project,
+        "provider": provider,
+        "trace_id": trace_id,
+        "parent_span_id": parent_span_id,
         "baseline_model": baseline_model,
+        "baseline_model_size": baseline_model_size,
+        "baseline_messages": baseline_messages,
         "baseline_content": baseline_content,
         "baseline_latency_ms": round(baseline_latency_ms, 1),
         "baseline_input_tokens": baseline_input_tokens,
         "baseline_output_tokens": baseline_output_tokens,
         "baseline_cost": baseline_cost,
+        "baseline_secondary_metrics": baseline_secondary_metrics,
         "candidate": comparison.candidate,
-        "candidate_content": None,
+        "candidate_content": candidate_content,
+        "candidate_model_size": candidate_model_size,
         "candidate_latency_ms": round(candidate_latency_ms, 1),
         "candidate_input_tokens": candidate_input_tokens,
         "candidate_output_tokens": candidate_output_tokens,
         "candidate_cost": candidate_cost,
+        "candidate_secondary_metrics": candidate_secondary_metrics,
         "score": comparison.score,
         "total_fields": comparison.total_fields,
         "matching_fields": comparison.matching_fields,
         "mismatched_fields": comparison.mismatched_fields,
         "error": comparison.error,
+        "input_payload": input_payload,
     }
 
     log_file = _get_project_file(project)
@@ -70,7 +89,9 @@ def print_comparison(
     candidate_latencies: dict[str, float],
 ) -> None:
     print(f"\n{'=' * 60}")
-    print(f"smollest comparison — baseline: {baseline_model} ({baseline_latency_ms:.0f}ms)")
+    print(
+        f"smollest comparison — baseline: {baseline_model} ({baseline_latency_ms:.0f}ms)"
+    )
     print(f"{'=' * 60}")
 
     for comp in comparisons:

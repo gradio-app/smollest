@@ -20,7 +20,7 @@ pip install smollest[all]          # both
 
 ## Usage
 
-Install `openai` from `smollest` and then write your code as normal!
+Install `openai` from `smollest` and write your code as normal:
 
 ```python
 from smollest import openai
@@ -66,6 +66,33 @@ result = client.messages.create(
 )
 ```
 
+Or instrument existing SDK usage with `autocompare()`:
+
+```python
+import openai
+from smollest.openai import autocompare
+
+autocompare(project="my-project")
+client = openai.OpenAI()
+client.chat.completions.create(
+    model="gpt-4.1-mini",
+    messages=[{"role": "user", "content": "Return JSON sentiment"}],
+)
+```
+
+```python
+import anthropic
+from smollest.anthropic import autocompare
+
+autocompare(project="my-project")
+client = anthropic.Anthropic()
+client.messages.create(
+    model="claude-sonnet-4-20250514",
+    max_tokens=120,
+    messages=[{"role": "user", "content": "Return JSON sentiment"}],
+)
+```
+
 ## How it works
 
 1. Your API call goes to the baseline model as normal
@@ -75,6 +102,31 @@ result = client.messages.create(
 
 Remote candidates run in parallel; local candidates run sequentially.
 
+## Model presets
+
+Default comparison candidates come from a date-indexed preset list and resolve to the latest month automatically. You can inspect or pin a month:
+
+```python
+from smollest import get_default_candidates
+
+latest = get_default_candidates()
+march = get_default_candidates("2026-03")
+```
+
+## Secondary metrics
+
+You can register callbacks to compute arbitrary metrics for baseline and candidate runs:
+
+```python
+from smollest import register_secondary_metric
+
+def co2_metric(payload: dict) -> dict[str, float]:
+    tokens = payload.get("input_tokens", 0) + payload.get("output_tokens", 0)
+    return {"co2_g": tokens * 0.00009}
+
+register_secondary_metric(co2_metric)
+```
+
 ## Dashboard
 
 ```bash
@@ -83,12 +135,36 @@ smollest show
 
 Opens a web dashboard with projects in the sidebar, a results table with truncation for long outputs, latency and cost per model, and aggregate match rates. The image above shows the UI, which you can reproduce by cloning this repo and running: `python examples/demo_dashboard.py`
 
+The dashboard now includes:
 
-## Roadmap
+- Trace view with input/output inspection
+- Model size badges
+- Secondary metrics display
+- A `+` column action to add another model and replay saved traces against it
 
-- Allow adding additional models directly through the UI
-- Add LLM as judge to score outputs that are not structured
-- Let developers eaisly fine tune models on outputs
+## Examples
+
+Two runnable example groups are provided:
+
+- `examples/mock/` for quick local seeding to inspect UI states
+  - `seed_basic.py`
+  - `seed_traces.py`
+  - `seed_secondary_metrics.py`
+- `examples/real/` for real SDK usage patterns (requires API keys)
+  - `openai_wrapper_basic.py`
+  - `openai_autocompare_chat.py`
+  - `openai_autocompare_responses.py`
+  - `anthropic_wrapper_basic.py`
+  - `anthropic_autocompare_messages.py`
+  - `openai_secondary_metrics.py`
+
+
+Run one:
+
+```bash
+python examples/mock/seed_traces.py
+smollest show
+```
 
 ## License
 
