@@ -76,18 +76,32 @@ def test_compute_imatrix_detects_missing_output(fake_binaries, monkeypatch, tmp_
         )
 
 
-def test_merge_imatrix_passes_each_input(fake_binaries, monkeypatch, tmp_path):
+def test_merge_imatrix_uses_one_comma_separated_in_file(
+    fake_binaries, monkeypatch, tmp_path
+):
     recorder = Recorder()
     monkeypatch.setattr(subprocess, "run", recorder)
     a, b = tmp_path / "a.gguf", tmp_path / "b.gguf"
-    quantize.merge_imatrix([a, b], tmp_path / "merged.gguf")
-    assert recorder.last.count("--in-file") == 2
-    assert str(a) in recorder.last and str(b) in recorder.last
+    quantize.merge_imatrix([a, b], tmp_path / "merged.gguf", tmp_path / "m.gguf")
+    assert recorder.last.count("--in-file") == 1
+    assert recorder.last[recorder.last.index("--in-file") + 1] == f"{a},{b}"
+
+
+def test_merge_imatrix_passes_model(fake_binaries, monkeypatch, tmp_path):
+    recorder = Recorder()
+    monkeypatch.setattr(subprocess, "run", recorder)
+    model = tmp_path / "m.gguf"
+    quantize.merge_imatrix(
+        [tmp_path / "a.gguf", tmp_path / "b.gguf"], tmp_path / "merged.gguf", model
+    )
+    assert recorder.last[recorder.last.index("-m") + 1] == str(model)
 
 
 def test_merge_imatrix_requires_two_inputs(fake_binaries, tmp_path):
     with pytest.raises(ValueError, match="at least two"):
-        quantize.merge_imatrix([tmp_path / "a.gguf"], tmp_path / "out.gguf")
+        quantize.merge_imatrix(
+            [tmp_path / "a.gguf"], tmp_path / "out.gguf", tmp_path / "m.gguf"
+        )
 
 
 def test_quantize_without_imatrix_omits_flag(fake_binaries, monkeypatch, tmp_path):

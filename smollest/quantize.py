@@ -136,21 +136,35 @@ def compute_imatrix(
     return out
 
 
-def merge_imatrix(inputs: list[Path], out: Path, timeout: float | None = None) -> Path:
+def merge_imatrix(
+    inputs: list[Path], out: Path, model: Path, timeout: float | None = None
+) -> Path:
     """Combine importance matrices into one.
 
     Used for the hybrid variant, which keeps a general-calibration floor under
     the trace-derived matrix so that channels the traces never exercise are
     still covered.
+
+    Inputs are passed as a single comma-separated ``--in-file``: repeating the
+    flag is deprecated and silently keeps only the last value, which would
+    yield a "merged" matrix identical to one input. ``-m`` is required even
+    though no prompt is processed.
     """
     if len(inputs) < 2:
         raise ValueError("merging requires at least two importance matrices")
     out.parent.mkdir(parents=True, exist_ok=True)
-    args = [IMATRIX_BIN]
-    for path in inputs:
-        args += ["--in-file", str(path)]
-    args += ["-o", str(out)]
-    run(args, timeout=timeout)
+    run(
+        [
+            IMATRIX_BIN,
+            "-m",
+            str(model),
+            "--in-file",
+            ",".join(str(path) for path in inputs),
+            "-o",
+            str(out),
+        ],
+        timeout=timeout,
+    )
     if not out.exists():
         raise ToolchainError(f"{IMATRIX_BIN} reported success but {out} is missing")
     return out

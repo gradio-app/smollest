@@ -313,7 +313,9 @@ def stage_b(config: Config, recipe: str) -> list[dict]:
     hybrid_imatrix = config.dirs()["imatrices"] / "hybrid.gguf"
     if not hybrid_imatrix.exists():
         print("  imatrix hybrid (merge of general + traces)")
-        quantize.merge_imatrix([general_imatrix, trace_imatrices[0]], hybrid_imatrix)
+        quantize.merge_imatrix(
+            [general_imatrix, trace_imatrices[0]], hybrid_imatrix, config.base_model
+        )
 
     eval_sets = {
         label.split(":", 1)[1]: path
