@@ -38,6 +38,7 @@ class CommandResult:
     args: list[str]
     stdout: str
     returncode: int
+    stderr: str = ""
 
 
 def require_binary(name: str) -> str:
@@ -50,23 +51,35 @@ def require_binary(name: str) -> str:
     return path
 
 
-def run(args: list[str], timeout: float | None = None) -> CommandResult:
-    """Run a llama.cpp command, capturing merged output."""
+def run(
+    args: list[str], timeout: float | None = None, merge_stderr: bool = True
+) -> CommandResult:
+    """Run a llama.cpp command and capture its output.
+
+    Diagnostics go to stderr and results to stdout, so tools whose output is
+    parsed as text can merge the two, while tools emitting structured output
+    (``llama-bench -o json``) must keep them apart or the JSON is corrupted by
+    backend init logging.
+    """
     binary = require_binary(args[0])
     completed = subprocess.run(
         [binary, *args[1:]],
         stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
+        stderr=subprocess.STDOUT if merge_stderr else subprocess.PIPE,
         text=True,
         errors="replace",
         timeout=timeout,
     )
     result = CommandResult(
-        args=list(args), stdout=completed.stdout, returncode=completed.returncode
+        args=list(args),
+        stdout=completed.stdout,
+        returncode=completed.returncode,
+        stderr=completed.stderr or "",
     )
     if completed.returncode != 0:
         raise ToolchainError(
-            f"{args[0]} exited {completed.returncode}\n{_tail(completed.stdout)}"
+            f"{args[0]} exited {completed.returncode}\n"
+            f"{_tail(completed.stdout + (completed.stderr or ''))}"
         )
     return result
 
