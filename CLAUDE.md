@@ -19,8 +19,8 @@ pip install -e .[dev]
 # Run all tests
 pytest
 
-# Run specific test file
-pytest tests/test_compare.py
+# Run a specific test file
+pytest tests/test_basic.py
 ```
 
 ### Code Formatting and Linting
@@ -31,15 +31,7 @@ ruff check --fix --select I && ruff format
 
 ## Architecture Overview
 
-smollest (Minimum Viable Language Model) provides drop-in wrappers for OpenAI and Anthropic clients that silently replay requests to smaller candidate LLMs and compare structured outputs.
-
-### Key Modules
-
-- `smollest/openai.py` — Drop-in `OpenAI` wrapper, intercepts `chat.completions.create()`
-- `smollest/anthropic.py` — Drop-in `Anthropic` wrapper, intercepts `messages.create()`
-- `smollest/candidates.py` — Runs candidate models (HuggingFace serverless + OpenAI-compatible local servers)
-- `smollest/compare.py` — JSON field-by-field exact match comparison
-- `smollest/results.py` — Logging to JSON file + console output
+`smollest` is currently an empty library skeleton. Source lives in `smollest/`, tests in `tests/`.
 
 ### Testing Strategy
 
@@ -47,7 +39,7 @@ Tests are located in the `tests/` directory. Always run tests before committing 
 
 ### Important Files for Common Tasks
 
-- **Adding new features**: Modify relevant modules in `smollest/`
+- **Adding new features**: Add modules under `smollest/`
 - **Adding dependencies**: Update `pyproject.toml` under `[project.dependencies]` or `[project.optional-dependencies]`
 
 ## Issue Resolution Workflow

@@ -4,15 +4,13 @@ build-backend = "hatchling.build"
 
 [project]
 name = "smollest"
-description = "Minimum Viable Language Model — find the smallest LLM that works for your task"
+description = ""
 authors = [
     { name = "Your Name", email = "your.email@example.com" },
 ]
 readme = "README.md"
 requires-python = ">=3.10"
-dependencies = [
-    "huggingface-hub>=0.20.0",
-]
+dependencies = []
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
@@ -20,22 +18,14 @@ classifiers = [
 ]
 dynamic = ["version"]
 
-[project.scripts]
-smollest = "smollest.cli:main"
-
 [project.urls]
 homepage = "https://github.com/abidlabs/smollest"
 repository = "https://github.com/abidlabs/smollest"
 
 [project.optional-dependencies]
-openai = ["openai>=1.0.0"]
-anthropic = ["anthropic>=0.20.0"]
-all = ["openai>=1.0.0", "anthropic>=0.20.0"]
 dev = [
     "ruff==0.9.3",
     "pytest>=8.0.0,<9.0.0",
-    "openai>=1.0.0",
-    "anthropic>=0.20.0",
 ]
 
 [tool.hatch.build.targets.wheel]

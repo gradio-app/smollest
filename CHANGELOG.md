@@ -1,4 +1,4 @@
-# my-package
+# smollest
 
 ## 0.1.0
 

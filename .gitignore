@@ -4,5 +4,5 @@ __pycache__/
 dist/
 build/
 .pytest_cache/
-smollest_results.json
+.ruff_cache/
 .venv/
